@@ -8,7 +8,8 @@ final theme = ThemeData(
 ));
 
 void main() {
-  runApp(MaterialApp(theme: theme, home: const MyClass()));
+  runApp(MaterialApp(
+      debugShowCheckedModeBanner: false, theme: theme, home: const MyClass()));
 }
 
 class MyClass extends StatelessWidget {
