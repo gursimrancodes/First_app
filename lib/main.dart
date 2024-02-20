@@ -1,4 +1,5 @@
-import 'package:first_app/screens/category.dart';
+
+import 'package:first_app/screens/tabs.dart';
 import 'package:flutter/material.dart';
 
 final theme = ThemeData(
@@ -18,7 +19,7 @@ class MyClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CategoryScreens(),
+      body: Tabs_Screen(),
     );
   }
 }
