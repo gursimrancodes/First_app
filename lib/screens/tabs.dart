@@ -1,16 +1,20 @@
+import 'package:first_app/provider/filter_provider.dart';
+import 'package:first_app/provider/meals_provider.dart';
 import 'package:first_app/screens/category.dart';
+import 'package:first_app/screens/meals_screen.dart';
 import 'package:first_app/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/screens/filters_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Tabs_Screen extends StatefulWidget {
+class Tabs_Screen extends ConsumerStatefulWidget {
   const Tabs_Screen({super.key});
 
   @override
-  State<Tabs_Screen> createState() => _Tabs_ScreenState();
+  ConsumerState<Tabs_Screen> createState() => _Tabs_ScreenState();
 }
 
-class _Tabs_ScreenState extends State<Tabs_Screen> {
+class _Tabs_ScreenState extends ConsumerState<Tabs_Screen> {
   int activeIndex = 0;
   void _selectPage(int index) {
     setState(() {
@@ -28,11 +32,14 @@ class _Tabs_ScreenState extends State<Tabs_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget activePage = CategoryScreens();
+    final availablemeal = ref.watch(mealsProvider);
+    Widget activePage = CategoryScreens(meals: availablemeal);
     var activePageTitle = "Category Screen";
     if (activeIndex == 1) {
-      activePage = Filters_Screen();
+      final filtermeal = ref.watch(filterMealsProvider);
       activePageTitle = "Favourites Screen";
+      activePage = Meals_Screen(meals: filtermeal,title: activePageTitle,);
+      
     }
     return Scaffold(
       appBar: AppBar(

@@ -1,6 +1,7 @@
 
 import 'package:first_app/screens/tabs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final theme = ThemeData(
     colorScheme: ColorScheme.fromSeed(
@@ -9,8 +10,7 @@ final theme = ThemeData(
 ));
 
 void main() {
-  runApp(MaterialApp(
-      debugShowCheckedModeBanner: false, theme: theme, home: const MyClass()));
+  runApp(const ProviderScope(child: MyClass()));
 }
 
 class MyClass extends StatelessWidget {
@@ -18,8 +18,9 @@ class MyClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Tabs_Screen(),
+    return  MaterialApp(
+      theme: theme,
+      home: const Tabs_Screen(),
     );
   }
 }
