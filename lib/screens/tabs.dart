@@ -1,5 +1,5 @@
+import 'package:first_app/provider/favorite_provider.dart';
 import 'package:first_app/provider/filter_provider.dart';
-import 'package:first_app/provider/meals_provider.dart';
 import 'package:first_app/screens/category.dart';
 import 'package:first_app/screens/meals_screen.dart';
 import 'package:first_app/widgets/main_drawer.dart';
@@ -32,11 +32,11 @@ class _Tabs_ScreenState extends ConsumerState<Tabs_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    final availablemeal = ref.watch(mealsProvider);
+    final availablemeal = ref.watch(filterMealProvider);
     Widget activePage = CategoryScreens(meals: availablemeal);
     var activePageTitle = "Category Screen";
     if (activeIndex == 1) {
-      final filtermeal = ref.watch(filterMealsProvider);
+      final filtermeal = ref.watch(favoriteMealNotifier);
       activePageTitle = "Favourites Screen";
       activePage = Meals_Screen(meals: filtermeal,title: activePageTitle,);
       

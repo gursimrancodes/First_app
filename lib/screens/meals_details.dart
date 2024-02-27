@@ -1,5 +1,5 @@
 import 'package:first_app/models/Meal.dart';
-import 'package:first_app/provider/filter_provider.dart';
+import 'package:first_app/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,7 +15,7 @@ class Meals_Details extends ConsumerWidget {
         actions: [
           IconButton(
               onPressed: () {
-                ref.read(filterMealsProvider.notifier).toggleFiltermeal(meals);
+                ref.read(favoriteMealNotifier.notifier).toggleFiltermeal(meals);
               },
               icon: Icon(Icons.star))
         ],

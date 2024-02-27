@@ -1,61 +1,56 @@
+import 'package:first_app/provider/filter_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Filters_Screen extends StatefulWidget {
+class Filters_Screen extends ConsumerWidget {
   const Filters_Screen({super.key});
 
-  @override
-  State<Filters_Screen> createState() => _Filters_ScreenState();
-}
 
-class _Filters_ScreenState extends State<Filters_Screen> {
-  bool _glutenfree = false;
-  bool _isVegan = false;
-  bool _isLactoseFree = false; 
-  bool _isVegetarian = false; 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activeFilter = ref.watch(filterProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Favourites"),
+        title: const Text("Filters"),
       ),
       body: Column(
         children: [
           SwitchListTile(
-              value: _glutenfree,
+              value: activeFilter[Filter.glutenFree]!,
               title: Text("Gluten Free"),
               activeColor: Colors.lightGreen,
               onChanged: (bool value) {
-               setState(() {
-                  _glutenfree = value;
-               });
+                ref
+                    .read(filterProvider.notifier)
+                    .setFilter(Filter.glutenFree, value);
               }),
           SwitchListTile(
-              value: _isVegan,
+              value: activeFilter[Filter.vegan]!,
               activeColor: Colors.lightGreen,
               title: Text("Vegan"),
               onChanged: (bool value) {
-                setState(() {
-                  _isVegan = value;
-                });
+                ref
+                    .read(filterProvider.notifier)
+                    .setFilter(Filter.vegan, value);
               }),
           SwitchListTile(
-              value: _isLactoseFree,
+              value: activeFilter[Filter.lactoseFree]!,
               activeColor: Colors.lightGreen,
               title: Text("Lactose Free"),
               onChanged: (bool value) {
-                setState(() {
-                  _isLactoseFree = value;
-                });
+                ref
+                    .read(filterProvider.notifier)
+                    .setFilter(Filter.lactoseFree, value);
               }),
           SwitchListTile(
-              value: _isVegetarian,
+              value: activeFilter[Filter.vegetarian]!,
               activeColor: Colors.lightGreen,
               title: Text("Vegetarian"),
               onChanged: (bool value) {
-                setState(() {
-                  _isVegetarian = value;
-                });
-              })
+                 ref
+                    .read(filterProvider.notifier)
+                    .setFilter(Filter.vegetarian, value);
+              }),
         ],
       ),
     );
