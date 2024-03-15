@@ -1,19 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/AuthPage.dart';
-import 'package:flutter_application_1/HomePage.dart';
+import 'package:flutter_application_1/Pages/SignInPage.dart';
+import 'package:flutter_application_1/Pages/HomePage.dart';
+import 'firebase_options.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyCwq5IoMaNYwxGyQTjMUyVuVw-uouRtyic",
-      appId: "1:920531833273:android:ff2b6d53819983ad73e668",
-      messagingSenderId: "920531833273",
-      projectId: "possible-ace-410212",
-    ),
-  );
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MaterialApp(
     home: MyApp(),
   ));
@@ -39,7 +36,7 @@ class MyApp extends StatelessWidget {
               } else if (snapshot.hasData) {
                 return const HomePage();
               }
-              return const AuthPage();
+              return const SignInPage();
             }));
   }
 }
