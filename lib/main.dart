@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         body: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              if (snapshot.connectionState == ConnectionState.waiting){
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
                   child: Text("Somenthing went wrong"),
                 );
               } else if (snapshot.hasData) {
-                return const HomePage();
+                return HomePage();
               }
               return const SignInPage();
             }));

@@ -14,12 +14,13 @@ class _SignInPageState extends State<SignInPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _usernameController = TextEditingController();
+  final _phonenumController = TextEditingController();
 
   final _signInForm = GlobalKey<FormState>();
 
   String signIn() {
     if (_passwordController.text == _confirmPasswordController.text) {
-      Auth.signIN(_emailController.text, _passwordController.text, context);
+      Auth().signIN(_emailController.text, _passwordController.text, _usernameController.text,_phonenumController.text, context, );
       return 'signIn';
     }
     return 'Enter same password';
@@ -65,6 +66,23 @@ class _SignInPageState extends State<SignInPage> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Enter your email";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: _phonenumController,
+                        decoration: InputDecoration(
+                            hintText: 'PhoneNumer',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.5),
+                            )),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Enter your phonenumber";
                           }
                           return null;
                         },
