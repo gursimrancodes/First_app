@@ -14,6 +14,13 @@ class _LoginInPageState extends State<LoginInPage> {
 
   final _signInForm = GlobalKey<FormState>();
 
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
+
   void loginIN() {
     Auth.loginIN(_emailController.text, _passwordController.text, context);
   }
@@ -36,8 +43,8 @@ class _LoginInPageState extends State<LoginInPage> {
                       decoration: InputDecoration(
                           hintText: 'Email',
                           border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.5),
-                      )),
+                            borderRadius: BorderRadius.circular(5.5),
+                          )),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Enter your email";
@@ -53,8 +60,8 @@ class _LoginInPageState extends State<LoginInPage> {
                       decoration: InputDecoration(
                           hintText: 'Password',
                           border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.5),
-                      )),
+                            borderRadius: BorderRadius.circular(5.5),
+                          )),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Enter your Password";

@@ -23,8 +23,9 @@ class _HomePageState extends State<HomePage> {
         .get();
     if (user.exists) {
       print("user exist");
+      
       setState(() {
-         _user = StoreUser.fromJson(user);
+        _user = StoreUser.fromJson(user);
       });
       print(_user);
       return (_user);
@@ -46,11 +47,9 @@ class _HomePageState extends State<HomePage> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _user != null?(
-            Text(_user!.username)
-          ):(
-            CircularProgressIndicator()
-          ),
+          _user != null
+              ? (Text(_user!.username))
+              : (CircularProgressIndicator()),
           ElevatedButton(
               onPressed: () {
                 Auth.signOut(context);

@@ -1,6 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Pages/LoginInPage.dart';
 import 'package:flutter_application_1/methods/Auth_methods.dart';
+import 'package:flutter_application_1/utils/pickImage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -14,16 +18,41 @@ class _SignInPageState extends State<SignInPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _usernameController = TextEditingController();
-  final _phonenumController = TextEditingController();
+  final _bioController = TextEditingController();
 
   final _signInForm = GlobalKey<FormState>();
+  Uint8List? _image;
 
-  String signIn() {
+
+
+  void signIn() {
     if (_passwordController.text == _confirmPasswordController.text) {
-      Auth().signIN(_emailController.text, _passwordController.text, _usernameController.text,_phonenumController.text, context, );
-      return 'signIn';
+      Auth().signIN(
+        _emailController.text,
+        _passwordController.text,
+        _usernameController.text,
+        _image,
+        _bioController.text,
+        context,
+      );
     }
-    return 'Enter same password';
+  }
+
+  selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
+  }
+
+    @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _bioController.dispose();
+    _confirmPasswordController.dispose();
+    _passwordController.dispose();
+    _usernameController.dispose();
   }
 
   @override
@@ -35,6 +64,35 @@ class _SignInPageState extends State<SignInPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 65,
+                          backgroundImage: MemoryImage(_image!),
+                          backgroundColor: Colors.red,
+                        )
+                      : const CircleAvatar(
+                          radius: 65,
+                          backgroundImage: NetworkImage(
+                              'https://img.freepik.com/premium-vector/avatar-icon002_750950-52.jpg'),
+                          backgroundColor: Colors.red,
+                        ),
+                  Positioned(
+                      bottom: -10,
+                      left: 80,
+                      child: IconButton(
+                        onPressed: () {
+                          selectImage();
+                        },
+                        icon: const Icon(Icons.add_a_photo),
+                      ))
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Form(
                   key: _signInForm,
                   child: Column(
@@ -74,15 +132,15 @@ class _SignInPageState extends State<SignInPage> {
                         height: 20,
                       ),
                       TextFormField(
-                        controller: _phonenumController,
+                        controller: _bioController,
                         decoration: InputDecoration(
-                            hintText: 'PhoneNumer',
+                            hintText: 'Bio',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.5),
                             )),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Enter your phonenumber";
+                            return "Add your Bio";
                           }
                           return null;
                         },
@@ -127,9 +185,8 @@ class _SignInPageState extends State<SignInPage> {
                       ElevatedButton(
                           onPressed: () {
                             if (_signInForm.currentState!.validate()) {
-                              String res = signIn();
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(content: Text(res)));
+                              signIn();
+                              return;
                             }
                           },
                           child: const Text("SignIn")),
